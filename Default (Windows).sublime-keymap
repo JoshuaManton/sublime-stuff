@@ -1,0 +1,13 @@
+[
+	{
+        "keys": ["ctrl+shift+e"],
+        "command": "exec",
+        "args": {
+            "hide_phantoms_only" : true
+        }
+    },
+
+    { "keys": ["alt+right"], "command": "next_view" },
+	{ "keys": ["alt+left"], "command": "prev_view" },
+	{ "keys": ["ctrl+shift+c"], "command": "copy_path" }
+]
