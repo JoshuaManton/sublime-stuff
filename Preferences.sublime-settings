@@ -1,0 +1,14 @@
+{
+	"ignored_packages":
+	[
+		"Vintage",
+	],
+	"close_windows_when_empty": false,
+	"color_scheme": "Packages/User/sublime-stuff/shwa.tmTheme",
+	"theme": "Adaptive.sublime-theme",
+	"trim_trailing_white_space_on_save": "all",
+	"font_size": 14,
+	"translate_tabs_to_spaces": true,
+	"detect_indentation": false,
+	"draw_white_space": ["all_tabs"],
+}
