@@ -11,27 +11,27 @@
         },
         {
             "name": "Compile first.jai",
-            "cmd": ["jai", "first.jai", "--", "check"],
+            "cmd": ["jai", "first.jai", "-", "check"],
             "shell": false,
             "quiet": true,
         },
         {
             "name": "Compile $folder/first.jai",
             "working_dir": "$folder",
-            "cmd": ["jai", "$folder/first.jai", "--", "check"],
+            "cmd": ["jai", "$folder/first.jai", "-", "check"],
             "shell": false,
             "quiet": true,
         },
         {
             "name": "Compile build.jai",
-            "cmd": ["jai", "build.jai", "--", "check"],
+            "cmd": ["jai", "build.jai", "-", "check"],
             "shell": false,
             "quiet": true,
         },
         {
             "name": "Compile $folder/build.jai",
             "working_dir": "$folder",
-            "cmd": ["jai", "$folder/build.jai", "--", "check"],
+            "cmd": ["jai", "$folder/build.jai", "-", "check"],
             "shell": false,
             "quiet": true,
         }

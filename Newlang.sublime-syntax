@@ -1,0 +1,148 @@
+%YAML 1.2
+---
+# http://www.sublimetext.com/docs/3/syntax.html
+name: Newlang
+file_extensions:
+  - lang
+first_line_match: "-[*]-( Mode:)? Lang -[*]-"
+scope: source.lang
+variables:
+  identifier: '\b[[:alpha:]_][[:alnum:]_]*\b'
+  type_chars: '[[:alnum:]\s,._^<>\[\]-]'
+  screaming_identifier: '\b[A-Z_](?![a-z])[A-Z_0-9]+\b'
+
+contexts:
+  main:
+    - include: global
+
+  global:
+    - include: comments
+    - include: types
+    - include: keywords
+    - include: functions-and-declarations
+    # - include: custom_styling
+    - include: strings
+    - include: string-escaped-char
+
+
+  custom_styling:
+    - match: \b({{screaming_identifier}})\b
+      captures:
+        1: storage.constant.lang
+
+    - match: \b([A-Z][a-z0-9]+)([_A-Z][a-z0-9]*)*\b
+      scope: storage.type.lang
+
+  block-comment:
+    - match: /\*
+      scope: punctuation.definition.comment.lang
+      push:
+        - meta_scope: comment.block.lang
+        - match: \*/
+          scope: punctuation.definition.comment.lang
+          pop: true
+        - include: block-comment
+
+  comments:
+    - include: block-comment
+    - match: //
+      scope: punctuation.definition.comment.lang
+      push:
+        - meta_scope: comment.line.double-slash.lang
+        - match: \n
+          pop: true
+
+  keywords:
+    - match: \b(import|export|foreign)\b
+      scope: keyword.control.lang
+    - match: \b(if|else|for|while|defer|return|remove|ifx|xx|is_constant|it|it_index|operator|as)\b
+      scope: keyword.control.lang
+    - match: \b(break|continue|case)\b
+      scope: keyword.control.lang
+    - match: \b(using|then|inline|no_inline)\b
+      scope: keyword.control.lang
+    - match: \b(context)\b
+      scope: keyword.operator.lang
+    - match: \b(push_allocator|push_context)\b
+      scope: keyword.control.lang
+    - match: \b(null|true|false)\b
+      scope: constant.language.lang
+    - match: '\b(\d(\d|_)*(.\d(\d|_)*)?)((e|E)(\+|-)?\d+)?[ijk]?\b'
+      scope: constant.numeric.lang
+    - match: '\b((0b(0|1|_)+)|(0o(\d|_)+)|(0d(\d|_)+)|(0[xX](\h|_)+))[ijk]?\b'
+      scope: constant.numeric.lang
+    - match: '---'
+      scope: constant.numeric.lang
+    - match: \b(Type|struct|enum|enum_flags|union|proc)\b
+      scope: storage.type.lang
+    - match: \b(transmute)\b
+      scope: keyword.function.lang
+    - match: '@'
+      scope: keyword.operator.lang
+    - match: '([#@]\s*{{identifier}})'
+      scope: keyword.tag.lang
+
+  functions-and-declarations:
+    - match: '\b({{identifier}})\s*[:]\s*[:]\s*'
+      captures:
+        1: meta.function.lang entity.name.function.lang
+        2: storage.type.lang
+    - match: '\b({{identifier}})\s*[:]\s*[:]\s*(inline|no_inline)\s+'
+      captures:
+        1: meta.function.lang entity.name.function.lang
+        2: keyword.control.lang
+        3: storage.type.lang
+    - match: \b(sizeof|alignof|offsetof|typeof)\b\s*\(
+      captures:
+        1: keyword.function.lang
+    - match: ({{identifier}})\s*[!]?\s*[\(]
+      captures:
+        1: support.function.lang
+    - match: '\b({{identifier}})\s*[:]\s*[:]\s*(struct|union|enum|bit_field)'
+      captures:
+        1: meta.type.lang entity.name.type.lang
+        2: storage.type.lang
+
+  types:
+    - match: '\b(struct|enum|union|bit_field)\b(?:(\{)(\}))?'
+      captures:
+        1: storage.type.lang
+        2: meta.block.lang punctuation.definition.block.begin.lang
+        3: meta.block.lang punctuation.definition.block.end.lang
+    - match: (\[)(\d*)(\])(?=[[:alpha:]_])
+      scope: meta.brackets.lang
+      captures:
+        1: punctuation.definition.brackets.begin.lang
+        2: constant.numeric.lang
+        3: punctuation.definition.brackets.end.lang
+    - include: basic-types
+    - match: '\$\s*({{identifier}})'
+      scope: storage.type.lang
+
+  basic-types:
+    - match: '\b((i8|i16|i32|i64|int)|(u8|u16|u32|u64|uint)|(float32|float64|float)|bool|string|any|void|typeid)\b'
+      scope: storage.type.lang
+
+  strings:
+    - match: '"'
+      scope: punctuation.definition.string.begin.lang
+      push:
+        - meta_scope: string.quoted.double.lang
+        - match: '"'
+          scope: punctuation.definition.string.end.lang
+          pop: true
+        - include: string-escaped-char
+    - match: "'"
+      scope: punctuation.definition.string.begin.lang
+      push:
+        - meta_scope: string.quoted.raw.lang
+        - match: "'"
+          scope: punctuation.definition.string.end.lang
+          pop: true
+        - include: string-escaped-char
+
+  string-escaped-char:
+    - match: '\\(\\|[abfnrutv''"]|x\h{2}|u\h{4}|U\h{8}|[0-7]{3})'
+      scope: constant.character.escape.lang
+    - match: \\.
+      scope: invalid.illegal.unknown-escape.lang

@@ -1,0 +1,39 @@
+{
+    "selector": "source.lang",
+    "file_regex": "^(..[^:]*):([0-9]+),?([0-9]+)?:? (.*)$",
+    "file_patterns": ["*.lang"],
+    "variants": [
+        {
+            "name": "Compile main.lang",
+            "cmd": ["lang", "main.lang"],
+            "shell": false,
+            "quiet": true,
+        },
+        {
+            "name": "Compile first.lang",
+            "cmd": ["lang", "first.lang", "--", "check"],
+            "shell": false,
+            "quiet": true,
+        },
+        {
+            "name": "Compile $folder/first.lang",
+            "working_dir": "$folder",
+            "cmd": ["lang", "$folder/first.lang", "--", "check"],
+            "shell": false,
+            "quiet": true,
+        },
+        {
+            "name": "Compile build.lang",
+            "cmd": ["lang", "build.lang", "--", "check"],
+            "shell": false,
+            "quiet": true,
+        },
+        {
+            "name": "Compile $folder/build.lang",
+            "working_dir": "$folder",
+            "cmd": ["lang", "$folder/build.lang", "--", "check"],
+            "shell": false,
+            "quiet": true,
+        }
+    ]
+}
