@@ -54,7 +54,7 @@ contexts:
   keywords:
     - match: \b(import|export|foreign)\b
       scope: keyword.control.ss
-    - match: \b(if|else|for|while|defer|ref|return|remove|ifx|xx|is_constant|it|it_index|operator)\b
+    - match: \b(if|else|for|while|defer|ref|return|foreach|operator)\b
       scope: keyword.control.ss
     - match: \b(break|continue|case)\b
       scope: keyword.control.ss
