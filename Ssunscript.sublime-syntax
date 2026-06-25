@@ -54,9 +54,9 @@ contexts:
   keywords:
     - match: \b(import|export|foreign)\b
       scope: keyword.control.ss
-    - match: \b(if|else|for|while|defer|ref|return|foreach|operator)\b
+    - match: \b(if|else|for|while|defer|ref|return|give|foreach|operator|switch)\b
       scope: keyword.control.ss
-    - match: \b(break|continue|case)\b
+    - match: \b(break|continue|case|default)\b
       scope: keyword.control.ss
     - match: \b(using|then|inline|no_inline)\b
       scope: keyword.control.ss
@@ -72,7 +72,7 @@ contexts:
       scope: constant.numeric.ss
     - match: '---'
       scope: constant.numeric.ss
-    - match: \b(Type|struct|class|proc|enum|enum_flags|union)\b
+    - match: \b(Type|struct|class|proc|method|var|enum|enum_flags|union)\b
       scope: storage.type.ss
     - match: \b(cast|transmute)\b
       scope: keyword.function.ss
@@ -119,7 +119,7 @@ contexts:
       scope: storage.type.ss
 
   basic-types:
-    - match: '\b((s8|s16|s32|s64|int)|(u8|u16|u32|u64|uint)|(float32|float64|float)|bool|string|Any|void)\b'
+    - match: '\b((s8|s16|s32|s64|int)|(u8|u16|u32|u64|uint)|(f32|f64|float)|bool|string|any|void|typeid)\b'
       scope: storage.type.ss
 
   strings:
@@ -136,6 +136,14 @@ contexts:
       push:
         - meta_scope: string.quoted.raw.ss
         - match: "'"
+          scope: punctuation.definition.string.end.ss
+          pop: true
+        - include: string-escaped-char
+    - match: "`"
+      scope: punctuation.definition.string.begin.ss
+      push:
+        - meta_scope: string.quoted.raw.ss
+        - match: "`"
           scope: punctuation.definition.string.end.ss
           pop: true
         - include: string-escaped-char

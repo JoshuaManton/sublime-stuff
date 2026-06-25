@@ -1,0 +1,13 @@
+{
+    "selector": "source.csl",
+    "file_regex": "^\\s*(.+?)\\((\\d+),(\\d+)\\):\\s*(.*)$",
+    "file_patterns": ["*.csl"],
+    "variants": [
+        {
+            "name": "Compile $file",
+            "cmd": ["C:/work/allout/build_csl/Debug/csl.exe", "."],
+            "shell": false,
+            "quiet": true,
+        }
+    ]
+}

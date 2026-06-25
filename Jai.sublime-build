@@ -4,6 +4,20 @@
     "file_patterns": ["*.jai"],
     "variants": [
         {
+            "name": "shwarpg",
+            "working_dir": "$folder/shwarpg",
+            "cmd": ["build.bat"],
+            "shell": false,
+            "quiet": true,
+        },
+        {
+            "name": "net-test",
+            "working_dir": "$folder/net-test",
+            "cmd": ["build.bat"],
+            "shell": false,
+            "quiet": true,
+        },
+        {
             "name": "Compile main.jai",
             "cmd": ["jai", "main.jai"],
             "shell": false,
